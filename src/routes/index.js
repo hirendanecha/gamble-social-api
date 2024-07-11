@@ -30,6 +30,6 @@ router.use("/profile", profileRouter);
 router.use("/dashboard", dashboardRouter);
 // Freedom tube routes //
 router.use("/channels", featuredChannels)
-router.use("/advertizment", advertizementRouter);
+router.use("/advertizement", advertizementRouter);
 
 module.exports = router;
