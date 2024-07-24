@@ -5,7 +5,8 @@ const { getPagination, getCount, getPaginationData } = require("../helpers/fn");
 
 // Admin Api //
 exports.findAllCommunity = async function (req, res) {
-  const { selectedCard, selectedCountry, selectedState, selectedAreas } = req.body;
+  const { selectedCard, selectedCountry, selectedState, selectedAreas } =
+    req.body;
   console.log(req.body);
   const searchData = await Community.findAllCommunity(
     selectedCard,
@@ -84,6 +85,17 @@ exports.editCommunity = async function name(req, res) {
   console.log(communityData, Id);
   const community = await Community.edit(communityData, Id);
   if (community) {
+    const emphasisData = req.body.emphasis;
+    const removeEmphasisList = req.body?.removeEmphasisList;
+    const areasData = req.body.areas;
+    const removeAreaList = req.body?.removeAreasList;
+    const emphasis = await Community.addEmphasis(
+      Id,
+      emphasisData,
+      removeEmphasisList
+    );
+    const areas = await Community.addAreas(Id, areasData, removeAreaList);
+    console.log(emphasis, areas);
     return res.json({
       error: false,
       message: "update community successfully",
@@ -320,7 +332,6 @@ exports.getEmphasisAndArea = async function (req, res) {
     res.status(404).send({ message: "not found!" });
   }
 };
-
 
 exports.CreateAdvertizementLink = async function (req, res) {
   if (Object.keys(req.body).length === 0) {
